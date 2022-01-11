@@ -71,9 +71,9 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	CreateLink(ctx context.Context, newLink model.NewLink) (*model.Link, error)
-	CreateUser(ctx context.Context, newUser model.NewUser) (*model.User, error)
+	CreateUser(ctx context.Context, newUser model.NewUser) (string, error)
 	Login(ctx context.Context, input model.Login) (string, error)
-	RefreshToken(ctx context.Context, refreshToken model.RefreshToken) (*model.User, error)
+	RefreshToken(ctx context.Context, refreshToken model.RefreshToken) (string, error)
 }
 type QueryResolver interface {
 	Links(ctx context.Context) ([]*model.Link, error)
@@ -306,9 +306,9 @@ input Login{
 }
 type Mutation{
   createLink(newLink: NewLink!): Link!
-  createUser(newUser: NewUser!): User!
+  createUser(newUser: NewUser!): String!
   login(input: Login!):String!
-  refreshToken(refreshToken: RefreshToken!): User!
+  refreshToken(refreshToken: RefreshToken!): String!
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -649,9 +649,9 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNUser2ᚖgithubᚗcomᚋabhinavmishra094ᚋanothergraphqlattemptᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -733,9 +733,9 @@ func (ec *executionContext) _Mutation_refreshToken(ctx context.Context, field gr
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.User)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNUser2ᚖgithubᚗcomᚋabhinavmishra094ᚋanothergraphqlattemptᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_links(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2775,10 +2775,6 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNUser2githubᚗcomᚋabhinavmishra094ᚋanothergraphqlattemptᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
-	return ec._User(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋabhinavmishra094ᚋanothergraphqlattemptᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {

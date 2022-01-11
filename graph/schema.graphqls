@@ -35,7 +35,7 @@ input Login{
 }
 type Mutation{
   createLink(newLink: NewLink!): Link!
-  createUser(newUser: NewUser!): User!
+  createUser(newUser: NewUser!): String!
   login(input: Login!):String!
-  refreshToken(refreshToken: RefreshToken!): User!
+  refreshToken(refreshToken: RefreshToken!): String!
 }
