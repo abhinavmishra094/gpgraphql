@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/golang-migrate/migrate"
-	"github.com/golang-migrate/migrate/database/mysql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/mysql"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 var Db *sql.DB
@@ -28,13 +30,8 @@ func Migrate() {
 		log.Fatal(err)
 	}
 	driver, _ := mysql.WithInstance(Db, &mysql.Config{})
-	url := fmt.Sprintf("file:///migrations")
-	fmt.Println("url: ", url)
-	m, err := migrate.NewWithDatabaseInstance(
-		url,
-		"gql1",
-		driver,
-	)
+	url := fmt.Sprintf("file://migrations")
+	m, err := migrate.NewWithDatabaseInstance(url, "gql1", driver)
 	if err != nil {
 		log.Fatal(err)
 	}
