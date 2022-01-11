@@ -28,7 +28,7 @@ func Migrate() {
 		log.Fatal(err)
 	}
 	driver, _ := mysql.WithInstance(Db, &mysql.Config{})
-	url := fmt.Sprintf("file://migrations")
+	url := fmt.Sprintf("file:///migrations")
 	fmt.Println("url: ", url)
 	m, err := migrate.NewWithDatabaseInstance(
 		url,
